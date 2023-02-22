@@ -8,10 +8,10 @@ a = 0.5 #Rayon transducteur (mm)
 z = 10 #Hauteur du point d'observation (mm)
 N_r  = 15 #Nombre de transducteurs 2*N_r+1
 n = 100 #Nombre de points
-r = np.linspace(0.001,5, n) #Liste des r étudiés entre 0 et 5mm
+r = np.linspace(0.001,10, n) #Liste des r étudiés entre 0 et 5mm
 t = np.linspace(0.95*z/c,2*np.sqrt(z**2+a**2)/c, n) #Liste temporelle des points entre 95%z/c et 2*sqrt((z^2+a^2)/c)
 f_e = 1/(t[1]-t[0]) #Fréquence d'échantillonage
-r_s = 2.5 #Point de focalisation
+r_s = 5.5 #Point de focalisation
 
 
 
@@ -129,7 +129,7 @@ def champ_focalise(a,r,z,t,r_s):
     Signaux = cut_useless_signal(retournement_temporel(transducteur_reception(r_s)))
 
     for i in range(-N_r,N_r+1):
-        p_list_f += pression(a,r+i*a,z,t, Signaux[i])
+        p_list_f += pression(a,np.abs(r+i*a),z,t, Signaux[i])
 
     return(p_list_f)
 
@@ -141,4 +141,5 @@ ax.set_xlabel('t')
 ax.set_ylabel('r')
 
 fig.colorbar(C, ax=ax)
+
 plt.show()
